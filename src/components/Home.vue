@@ -23,7 +23,7 @@
           text-color="#fff"
           active-text-color="white"
           router
-          default-active="Index"
+          :default-active="currentRouter"
         >
           <el-menu-item index="Index">
             <i class="el-icon-s-home"></i>
@@ -68,8 +68,15 @@
 
 <script>
 export default {
+  created() {
+    let temp;
+    temp = window.location.href.match(/#\/\w+/)[0].slice(2);
+    this.currentRouter = temp
+  },
   data() {
-    return {};
+    return {
+      currentRouter: "Index"
+    };
   },
   methods: {
     // 退出按钮

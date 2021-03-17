@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-03-07 23:02:07
+ * @LastEditTime: 2021-03-17 20:18:13
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \moxibustion\src\main-dev.js
+ */
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'

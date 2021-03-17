@@ -17,13 +17,10 @@
         
       </el-table-column>
       <el-table-column prop="imageUrl" label="商品图片" align="center">
-        <!-- <div slot-scope="scope"> -->
-        <!-- {{scope}} -->
-        <!-- </div> -->
-        <!-- <template slot-scope=""> -->
-        <!-- {{JSON.stringify(scope)}} -->
-        <!-- <img :src="scope.row.imageUrl" alt=""> -->
-        <!-- </template> -->
+        <template slot-scope="scope">
+          
+          <img :src="'http://47.112.125.53:8080/'+scope.row.imageUrl" alt="">
+        </template>
       </el-table-column>
       <el-table-column label="上架状态" align="center">
         <!-- scope接受本行数据 -->
