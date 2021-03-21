@@ -18,8 +18,7 @@
       </el-table-column>
       <el-table-column prop="imageUrl" label="商品图片" align="center">
         <template slot-scope="scope">
-          
-          <img :src="'http://47.112.125.53:8080/'+scope.row.imageUrl" alt="">
+          <img :src="'http://47.112.125.53:8080/static/images/'+scope.row.imageUrl" alt="" class="goods-image">
         </template>
       </el-table-column>
       <el-table-column label="上架状态" align="center">
@@ -121,6 +120,7 @@ export default {
         // this.goodsData = result.data.data;
         // this.goodsData=$.extend(true,{},result.data.data);
         this.goodsData = JSON.parse(JSON.stringify(result.data.data));
+        console.log(this.goodsData)
         for(let i = 0; i < this.goodsData.length; i++) {
           if(!this.goodsData[i].sales) {
             this.goodsData[i].sales = 0
@@ -203,5 +203,10 @@ export default {
   font-size: 12px;
   color: white;
   cursor: pointer;
+}
+
+.goods-image {
+  height: 120px;
+  width: 120px;
 }
 </style>

@@ -13,7 +13,7 @@
       </el-table-column>
       <el-table-column prop="path" label="方案图片" align="center">
         <template slot-scope="scope">
-          <img :src="scope.row.path" alt="" />
+          <img :src="scope.row.path" alt=""  class="scheme-image"/>
         </template>
       </el-table-column>
       <el-table-column prop="reason" label="病症原因" align="center">
@@ -24,7 +24,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <a href="javascript:;" @click="deleteScheme(scope)">删除</a>
+          <!-- <a href="javascript:;" @click="deleteScheme(scope)">删除</a> -->
           <a href="javascript:;" @click="addCourse(scope)">添加疗程</a>
         </template>
       </el-table-column>
@@ -175,5 +175,9 @@ export default {
 }
 img {
   width: 250px;
+}
+.scheme-image {
+  height: 120px;
+  width: 120px;
 }
 </style>

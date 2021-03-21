@@ -69,9 +69,9 @@
         发货提醒
       </div>
       <div class="orderMessage">
-        <div>订单号：{{dialogData.orderIdb || "暂无数据"}}</div>
+        <div>订单号：{{dialogData.orderId || "暂无数据"}}</div>
         <div>姓名：{{dialogData.userName || "暂无数据"}}</div>
-        <div>联系方式：{{dialogData.userPone || "暂无数据"}}</div>
+        <div>联系方式：{{dialogData.userPhone || "暂无数据"}}</div>
         <div>商品：{{dialogData.productName || "暂无数据"}}</div>
         <div>数量：{{dialogData.productNumber || "暂无数据"}}</div>
         <div>订单总额：{{dialogData.orderAmout || "暂无数据"}}</div>
@@ -189,6 +189,7 @@ export default {
     async deliver(data) {
       this.visable = true
       // 对话框数据
+      console.log(data);
       this.dialogData = data
     },
     // 筛选并更新数据

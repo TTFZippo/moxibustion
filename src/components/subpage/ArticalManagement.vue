@@ -71,7 +71,7 @@
             :show-file-list="false"
             :before-upload="beforeAvatarUpload1"
           >
-            <img v-if="imgUrl" :src="imgUrl" class="avatar" id="tempImg1" />
+            <img v-if="imgUrl" :src="imgUrl" class="avatar " id="tempImg1"/>
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
@@ -263,7 +263,8 @@ export default {
   cursor: pointer;
 }
 .imgs {
-  height: 200px;
+  height: 120px;
+  width: 120px;
 }
 .deleteArtical {
   text-decoration: none;
