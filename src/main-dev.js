@@ -11,11 +11,13 @@ import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
 import './assets/global.css'
+import store from './store'
 
 // 网络配置
 import axios from 'axios'
 // TODO:配置根路径
 axios.defaults.baseURL  = 'https://www.dzkf.com/'
+axios.defaults.baseURL  = 'http://borui.cn.utools.club/'
 // axios拦截器，预处理，请求头加入token
 axios.interceptors.request.use(config => {
   config.headers.token = window.sessionStorage.getItem('token')
@@ -28,5 +30,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

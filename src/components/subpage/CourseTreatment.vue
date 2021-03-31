@@ -63,9 +63,7 @@ export default {
     // 会话存储获取数据
     getStorageData() {
       window.sessionStorage.getItem("");
-      this.schemeData.symptomName = window.sessionStorage.getItem(
-        "symptomName"
-      );
+      this.schemeData.symptomName = window.sessionStorage.getItem("symptomName");
       this.schemeData.treatName = window.sessionStorage.getItem("treatName");
       this.schemeData.treatId = window.sessionStorage.getItem("treatId");
       this.schemeData.describe = window.sessionStorage.getItem("describe");
@@ -75,30 +73,26 @@ export default {
     },
 
     // 获取该方案的所有穴位信息
-    async getAllAcpuPoins() {
-      
-      const result = await this.$http.get("/ilustrate/ilustrateInfomation", {
-        params: {
-          treatId: this.schemeData.treatId,
-        },
-      });
+    // async getAllAcpuPoins() {
+    //   const result = await this.$http.get("/ilustrate/ilustrateInfomation", {
+    //     params: {
+    //       treatId: this.schemeData.treatId,
+    //     },
+    //   });
 
-      // 天数
-      this.day = result.data.data.length;
-      this.acpuPointsData = result.data.data;
+    //   // 天数
+    //   this.day = result.data.data.length;
+    //   this.acpuPointsData = result.data.data;
 
-      //置空
-      for (let i = 0; i < this.acpuPointsData.length; i++) {
-        // 每天的穴位的个数
-        let length = this.acpuPointsData[i].xueWeiList.length;
-        this.acpuPointsData[i].xueWeiList[length] = {};
-      }
-
-      
-    },
+    //   //置空
+    //   for (let i = 0; i < this.acpuPointsData.length; i++) {
+    //     // 每天的穴位的个数
+    //     let length = this.acpuPointsData[i].xueWeiList.length;
+    //     this.acpuPointsData[i].xueWeiList[length] = {};
+    //   }
+    // },
 
     addDay() {
-      
       let day = this.day * 1;
       this.$set(this.acpuPointsData, day, {})
       this.$set(this.acpuPointsData[day],'xueWeiList',[])

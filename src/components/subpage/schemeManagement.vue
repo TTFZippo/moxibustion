@@ -9,23 +9,21 @@
       </el-table-column>
       <el-table-column prop="treatName" label="方案名称" align="center">
       </el-table-column>
-      <el-table-column prop="describe" label="方案描述" align="center">
-      </el-table-column>
-      <el-table-column prop="path" label="方案图片" align="center">
+      
+      <el-table-column prop="path" label="封面图片" align="center">
         <template slot-scope="scope">
           <img :src="scope.row.path" alt=""  class="scheme-image"/>
         </template>
       </el-table-column>
-      <el-table-column prop="reason" label="病症原因" align="center">
+      <el-table-column prop="reason" label="病症表现" align="center">
       </el-table-column>
-      <el-table-column prop="effect" label="灸疗效果" align="center">
-      </el-table-column>
+      
       <el-table-column prop="create_Time" label="上传日期" align="center">
       </el-table-column>
-      <el-table-column label="操作" align="center">
+      <el-table-column label="操作" align="center" class="options">
         <template slot-scope="scope">
-          <!-- <a href="javascript:;" @click="deleteScheme(scope)">删除</a> -->
-          <a href="javascript:;" @click="addCourse(scope)">添加疗程</a>
+          <a href="javascript:;" @click="addCourse(scope)" class="edit">编辑</a>
+          <a href="javascript:;" @click="deleteScheme(scope)">删除</a>
         </template>
       </el-table-column>
     </el-table>
@@ -33,6 +31,7 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 export default {
   created() {
     this.getSchemes();
@@ -47,6 +46,7 @@ export default {
   methods: {
     // 添加疗程
     addCourse(scope) {
+      this.createNewScheme(false);
       let index = scope.$index;
       window.sessionStorage.setItem(
         "symptomName",
@@ -64,7 +64,7 @@ export default {
       window.sessionStorage.setItem("path", this.schemeData[index].path);
       window.sessionStorage.setItem("reason", this.schemeData[index].reason);
       window.sessionStorage.setItem("effect", this.schemeData[index].effect);
-      this.$router.push("/CourseTreatment");
+      this.$router.push("/Addscheme");
     },
     // 获取诊疗方案数据
     async getSchemes() {
@@ -78,7 +78,6 @@ export default {
         return this.$message.error("登录状态过期，请重新登录");
 
       if (result.data.status == 200) {
-        
         this.schemeData = result.data.data;
         for (let i = 0; i < result.data.data.length; i++) {
           this.schemeData[i].path =
@@ -92,30 +91,11 @@ export default {
     // 跳转到添加方案
     addScheme() {
       this.$router.push("/addscheme");
+      this.createNewScheme(true);
     },
-
+    ...mapMutations(['createNewScheme']),
     // 删除本行方案,传入本行信息
     async deleteScheme(scopeData) {
-      // const result = await this.$confirm(
-      //   "此操作将永久删除该方案，是否继续?",
-      //   "提示",
-      //   {
-      //     confirmButtonText: "确定",
-      //     cancelButtonText: "取消",
-      //     type: "warning",
-      //   }
-      // ).catch(() => {});
-      // // 确认删除
-      // if (result == "confirm") {
-
-      //   const result = this.$http.delete('/ilustrate/ilustrate', {
-      // data: {
-      //   treatId: scopeData.row.treatId,
-      //   symptomId: scopeData.row.symptomId
-      // }
-      //   })
-      //   this.getSchemes()
-      // }
       this.$confirm("此操作将永久删除该方案，是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -167,7 +147,7 @@ export default {
 }
 .el-table a {
   text-decoration: none;
-  display: block;
+  margin: 0 10px;
   color: red;
 }
 .el-table a:nth-of-type(1) {
@@ -179,5 +159,8 @@ img {
 .scheme-image {
   height: 120px;
   width: 120px;
+}
+.el-table  .edit {
+  color: black;
 }
 </style>

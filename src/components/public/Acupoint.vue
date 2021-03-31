@@ -7,24 +7,12 @@
         <span>添加穴位</span>
       </div>
       <div v-if="acpuPointData.path" class="acpu-point-info"> 
-        <div>穴位：{{acpuPointData.pointname}}</div>
-        <div>温度：{{acpuPointData.temperature}}℃</div>
-        <div>时间：{{acpuPointData.treattime}}分钟</div>
-        <a href="javascript:;" @click="deletePoint()">删除</a>
+        <a href="javascript:;" @click="deletePoint()" class="delete">删除</a>
       </div>
     </div>
 
     <el-dialog title="添加穴位" :visible.sync="visable" width="500px">
       <el-form :model="acpuPoint">
-        <el-form-item>
-          <el-input v-model="acpuPoint.name" placeholder="穴位名称"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-input v-model="acpuPoint.temp" placeholder="灸疗温度"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-input v-model="acpuPoint.time" placeholder="灸疗时间"></el-input>
-        </el-form-item>
         <el-form-item>
           <el-upload
             class="avatar-uploader"
@@ -49,8 +37,10 @@
 export default {
   inject: ["reload"],
   created() {
-    
-    this.realPath = "http://47.112.125.53:8080/static/images/" + this.acpuPointData.path
+    this.realPath =   this.acpuPointData.path;
+    if(this.isAcupoint) {
+      this.realPath =  'https://www.dzkf.com/static/images/' + this.acpuPointData.path;
+    }
   },
   data() {
     return {
@@ -61,11 +51,12 @@ export default {
       
     };
   },
-  props: ["day", "treatProjectName", "acpuPointData", "treatId"],
+  props: ["day", "treatProjectName", "acpuPointData", "treatId", "isAcupoint"],
   methods: {
     // 删除穴位
     async deletePoint() {
-      
+      console.log(this.treatId);
+      console.log(this.acpuPointData.id);
       const result = await this.$http.delete('/ilustrate/xueWei', {
         data: {
           "treatId": this.treatId,
@@ -73,6 +64,8 @@ export default {
         }
       })
       if(result.data.status == 200 ) {
+        console.log(result);
+
         this.$message.success("删除成功")
       }
       this.reload()
@@ -80,11 +73,14 @@ export default {
     
     // 添加穴位
     uploadAcupoint() {
+      this.imageUrl = ""
+      this.acpuPoint = {}
       this.visable = true;
     },
 
     // 预览图片
     beforeAvatarUpload(file) {
+      console.log(file);
       this.acpuPoint.file = file;
       var reader = new FileReader();
       reader.readAsDataURL(file);
@@ -100,37 +96,23 @@ export default {
     async submit() {
       var formData = new window.FormData();
       if (
-        !this.acpuPoint.temp ||
-        !this.treatProjectName ||
-        !this.acpuPoint.time ||
         !this.acpuPoint.file
       ) {
         this.$message.warning("请完整填写");
         return;
       }
-      formData.append("day", this.day);
-      formData.append("pointName", this.acpuPoint.name);
-      formData.append("temperature", this.acpuPoint.temp);
+      formData.append("day", 1);
       formData.append("treatProjectName", this.treatProjectName);
-      formData.append("treatTime", this.acpuPoint.time);
       formData.append("file", this.acpuPoint.file, this.acpuPoint.file.name);
-      
+      formData.append("temperature", 0);
+      formData.append("treatTime", 0);
       // 请求头
       let config = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       };
-      // let result = await this.$http.put("/ilustrate/xuewei", formData, config);
-      // // 添加成功
-      // if (result.data.status == 200) {
-      //   this.$message.success("添加成功");
-      //   this.visable = false;
-      //   this.reload()
-      //   console.log(result);
-      // } else {
-      //   console.log("上传失败");
-      // }
+      
       this.visable = false;
       this.$http  
         .put("/ilustrate/xuewei", formData, config)
@@ -150,7 +132,6 @@ export default {
 .all-container {
   width: 250px;
   margin-bottom: 20px;
-  margin-right: 50px;
 }
 span {
   padding-left: 10px;
@@ -199,5 +180,9 @@ img {
 }
 #tempImg {
   width: 460px;
+}
+.delete {
+  color: black;
+  text-decoration: none;
 }
 </style>
